@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Mascotas</title>
+</head>
+<body>
+    <h1>Listado de Mascotas</h1>
+    <div id="petsList">
+        
+    </div>
+
+    <script>
+        fetch('http://localhost:8090/pets')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Datos recibidos:', data); // Verifica que recibes datos aquí
+                const petsListDiv = document.getElementById('petsList');
+                data.forEach(pet => {
+                    const petElement = document.createElement('p');
+                    petElement.textContent = `Nombre: ${pet.name}, Tipo: ${pet.type}`;
+                    petsListDiv.appendChild(petElement);
+                });
+            })
+            .catch(error => console.error('Error al obtener los datos de la API:', error));
+
+
+    </script>
+    
+</body>
+</html>
